@@ -16,16 +16,26 @@ const registerSocketServer = (server) => {
   //socket has jwt, verify it. put user on socket
   io.use(authSocket);
 
+  const emitOnlineUsers = () => {
+    const onlineUsers = serverStore.getOnlineUsers();
+    io.emit('online-users', { onlineUsers });
+  };
+
   io.on('connection', (socket) => {
     console.log('user connected');
     console.log(socket.id);
 
     newConnectionHandler(socket, io); // send events in here on startup
+    emitOnlineUsers();
 
     socket.on('disconnect', () => {
       disconnectHandler(socket);
     });
   });
+
+  setInterval(() => {
+    emitOnlineUsers();
+  }, 8000);
 };
 
 module.exports = {

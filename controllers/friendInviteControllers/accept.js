@@ -28,6 +28,8 @@ module.exports = async (req, res) => {
     await FriendInvitation.findByIdAndDelete(id);
 
     //update list if users are online
+    friendsUpdates.sendUserTheirFriends(userId);
+    friendsUpdates.sendUserTheirFriends(senderId);
 
     //update list of pending invitations
     friendsUpdates.updateFriendsPendingInvitations(senderId);
