@@ -2,9 +2,7 @@ const Conversation = require('../../models/conversation');
 const serverStore = require('../../serverStore');
 
 const updateChatHistory = async (conversationId, socketId = null) => {
-  const conversation = await Conversation.findById(conversationId, {
-    messages: 1,
-  }).populate({
+  const conversation = await Conversation.findById(conversationId).populate({
     path: 'messages',
     model: 'Message',
     populate: {

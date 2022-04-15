@@ -33,6 +33,7 @@ module.exports = async (req, res) => {
         email,
         token,
         username,
+        _id: user._id,
       },
     });
   } catch (err) {
